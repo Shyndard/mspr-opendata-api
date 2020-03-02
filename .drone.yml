@@ -14,7 +14,7 @@ steps:
   - name: deploy
     image: caprover/cli-caprover:latest
     commands:
-      - caprover  deploy --caproverUrl "$CAPROVER_DOMAIN" --caproverApp "$CAPROVER_APPNAME" --branch master --caproverPassword "$CAPROVER_PASSWORD"
+      - caprover deploy -h $CAPROVER_DOMAIN -p $CAPROVER_PASSWORD -b master -a $CAPROVER_APPNAME
     depends_on: [build, test]
     environment:
       CAPROVER_DOMAIN:
