@@ -19,3 +19,9 @@ steps:
     commands:
       - mvn clean install -DskipTests=true
     depends_on: [test, code-analysis]
+ - name: deploy
+    image: node:lts
+    commands:
+      - sudo npm install -g caprover
+      - caprover deploy -h $CAPROVER_DOMAIN -p $CAPROVER_PASSWORD -b master -a $CAPROVER_APPNAME
+    depends_on: [build]
