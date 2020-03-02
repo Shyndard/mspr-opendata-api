@@ -1,8 +1,7 @@
-![build status](https://drone.k3d.dev/api/badges/Shyndard/mspr-opendata-api/status.svg)
-
 <h1 align="center">Welcome to mspr-opendata-api 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://drone.k3d.dev/api/badges/Shyndard/mspr-opendata-api/status.svg" />
   <a href="https://twitter.com/shyndard" target="_blank">
     <img alt="Twitter: shyndard" src="https://img.shields.io/twitter/follow/shyndard.svg?style=social" />
   </a>
