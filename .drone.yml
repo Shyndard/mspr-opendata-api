@@ -1,0 +1,25 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+  - name: test
+    image: maven:3.6.3-jdk-8
+    commands:
+      - mvn test
+  - name: build
+    image: maven:3.6.3-jdk-8
+    commands:
+      - mvn clean install -DskipTests=true
+  - name: deploy
+    image: caprover/cli-caprover:latest
+    commands:
+      - caprover deploy -h $CAPROVER_DOMAIN -p $CAPROVER_PASSWORD -b ${DRONE_BRANCH} -a $CAPROVER_APPNAME
+    depends_on: [build, test]
+    environment:
+      CAPROVER_DOMAIN:
+        from_secret: CAPROVER_DOMAIN
+      CAPROVER_APPNAME:
+        from_secret: CAPROVER_APPNAME
+      CAPROVER_PASSWORD:
+        from_secret: CAPROVER_PASSWORD
