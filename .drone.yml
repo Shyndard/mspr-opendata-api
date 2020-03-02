@@ -15,4 +15,4 @@ steps:
     image: node:lts
     commands:
       - npx caprover deploy -h $CAPROVER_DOMAIN -p $CAPROVER_PASSWORD -b master -a $CAPROVER_APPNAME
-    depends_on: [build, test, code-analysis]
+    depends_on: [build, test]
