@@ -1,3 +1,5 @@
+![build status](https://drone.k3d.dev/api/badges/Shyndard/mspr-opendata-api/status.svg)
+
 <h1 align="center">Welcome to mspr-opendata-api 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
@@ -24,13 +26,14 @@ mvn test
 
 👤 **Shyndard**
 
-* Website: https://shyndard.eu
-* Twitter: [@shyndard](https://twitter.com/shyndard)
-* Github: [@shyndard](https://github.com/shyndard)
+- Website: https://shyndard.eu
+- Twitter: [@shyndard](https://twitter.com/shyndard)
+- Github: [@shyndard](https://github.com/shyndard)
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
