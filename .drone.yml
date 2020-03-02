@@ -19,7 +19,7 @@ steps:
     commands:
       - mvn clean install -DskipTests=true
     depends_on: [test, code-analysis]
- - name: deploy
+  - name: deploy
     image: node:lts
     commands:
       - sudo npm install -g caprover
