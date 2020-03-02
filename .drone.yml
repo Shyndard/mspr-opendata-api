@@ -12,7 +12,7 @@ steps:
     commands:
       - mvn clean install -DskipTests=true
   - name: deploy
-    image: node:lts
+    image: caprover/cli-caprover:latest
     commands:
-      - npx caprover deploy -h $CAPROVER_DOMAIN -p $CAPROVER_PASSWORD -b master -a $CAPROVER_APPNAME
+      - caprover deploy -h $CAPROVER_DOMAIN -p $CAPROVER_PASSWORD -b master -a $CAPROVER_APPNAME
     depends_on: [build, test]
