@@ -4,12 +4,12 @@ name: default
 
 steps:
   - name: code-analysis
-    image: aosapps/drone-sonar-plugin
-    settings:
-      sonar_host:
-        from_secret: sonar_host
-      sonar_token:
-        from_secret: sonar_token
+    image: maven:3.6.3-jdk-8
+    commands:
+      - mvn verify sonar:sonar -Dsonar.host.url=$SONAR_HOST -DskipTests=true
+    environment:
+      SONAR_HOST:
+        from_secret: SONAR_HOST
   - name: test
     image: maven:3.6.3-jdk-8
     commands:
