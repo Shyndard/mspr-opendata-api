@@ -1,4 +1,4 @@
 {
   "schemaVersion": 2,
-  "imageName": "shyndard/opendata-api"
+  "dockerfilePath": "./Dockerfile"
  }
