@@ -2,7 +2,6 @@ kind: pipeline
 type: kubernetes
 name: default
 
-
 steps:
   - name: code-analysis
     image: aosapps/drone-sonar-plugin
