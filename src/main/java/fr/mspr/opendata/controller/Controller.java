@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.mspr.opendata.service.EntryService;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Controller {
 
 	@Autowired
