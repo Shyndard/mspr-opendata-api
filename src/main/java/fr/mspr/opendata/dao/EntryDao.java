@@ -1,9 +1,12 @@
 package fr.mspr.opendata.dao;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import fr.mspr.opendata.entity.dto.EntryDto;
 
-public interface EntryDao {
+@Repository
+public interface EntryDao extends CrudRepository<EntryDto, Long> {
 
-	void save(EntryDto entry);
     
 }
