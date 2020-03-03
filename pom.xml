@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>fr.mspr.opendata</groupId>
 	<artifactId>opendata-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>opendata-api</name>
 
 	<properties>
@@ -43,6 +43,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 			<version>1.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
