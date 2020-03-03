@@ -26,7 +26,7 @@ public class OpendataApiApplicationTests {
 	@Test
 	public void badRequestTest() {
 		ResponseEntity<Object> response = this.restTemplate.postForEntity("/upload", null, null);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 	}
 
 	@Test
