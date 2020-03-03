@@ -29,19 +29,7 @@ public class Controller {
 		return entryService.getAll();
     }
 	
-	@PostMapping(value = "/upload", consumes = "multipart/form-data")
-	@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> uploadCsv(@RequestParam("file") MultipartFile file) {
-		System.out.println("multipart/form-data");
-		try {
-			entryService.save(file.getInputStream());
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		} catch (IOException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-    }
-	
-	@PostMapping(value = "/upload", consumes = "text/csv;charset=UTF-8")
+	@PostMapping(value = "/upload")
 	@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> uploadCsv(@RequestBody InputStream body) {
 		System.out.println("consume text/csv");
