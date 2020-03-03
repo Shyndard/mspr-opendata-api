@@ -24,7 +24,9 @@ public class EntryServiceImpl implements EntryService {
 	public void save(InputStream file) throws IOException {
 		CSVParser records = CSVFormat.DEFAULT.withHeader().parse(new InputStreamReader(file));
 		records.forEach(item -> {
-			entryDao.save(new EntryDto(item.get(0), item.get(1), item.get(2)));
+			if(item.getRecordNumber() == 3) {
+				entryDao.save(new EntryDto(item.get(0), item.get(1), item.get(2)));
+			}
 		});
     }
 
