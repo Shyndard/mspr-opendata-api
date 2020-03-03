@@ -2,6 +2,10 @@ package fr.mspr.opendata;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
+
+import javax.annotation.PostConstruct;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,14 @@ public class OpendataApiApplicationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@PostConstruct
+	public void construct() {
+		restTemplate.getRestTemplate().setInterceptors(Collections.singletonList((request, body, execution) -> {
+			request.getHeaders().add("Authorization", "mangerDesChats");
+			return execution.execute(request, body);
+		}));
+	}
+
 	@Test
 	public void badRequestTest() {
 		ResponseEntity<Object> response = this.restTemplate.postForEntity("/upload", null, null);
@@ -35,7 +47,8 @@ public class OpendataApiApplicationTests {
 		map.add("file", new ClassPathResource("test.csv"));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<LinkedMultiValueMap<String, Object>>(map, headers);
+		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<LinkedMultiValueMap<String, Object>>(
+				map, headers);
 		ResponseEntity<String> response = this.restTemplate.postForEntity("/upload", requestEntity, String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}

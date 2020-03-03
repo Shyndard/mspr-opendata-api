@@ -37,12 +37,13 @@ public class CustomFilter extends GenericFilterBean {
 			return;
 		}
 		
-		if(httpRequest.getHeader("Authorization").contains("mangerDesChats")) {
+		String authorization = httpRequest.getHeader("Authorization");
+		if(authorization != null && authorization.contains("mangerDesChats")) {
 			chain.doFilter(request, response);
 		} else {
 			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			Map<String, String> reponse = new HashMap<>();
-			reponse.put("error", "Invalid bearer token, fuck you !");
+			reponse.put("error", "Invalid bearer token, fuck you Clement !");
 			httpResponse.getWriter().print(new ObjectMapper().writeValueAsString(reponse));
 		}
 	}
