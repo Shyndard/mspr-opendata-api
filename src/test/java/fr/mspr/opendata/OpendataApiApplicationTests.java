@@ -26,7 +26,7 @@ public class OpendataApiApplicationTests {
 	@Test
 	public void badRequestTest() {
 		ResponseEntity<Object> response = this.restTemplate.postForEntity("/upload", null, null);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 	}
 
 	@Test
@@ -37,7 +37,6 @@ public class OpendataApiApplicationTests {
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<LinkedMultiValueMap<String, Object>>(map, headers);
 		ResponseEntity<String> response = this.restTemplate.postForEntity("/upload", requestEntity, String.class);
-		System.out.println("response status: " + response.getStatusCode());
-		System.out.println("response body: " + response.getBody());
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
 }
