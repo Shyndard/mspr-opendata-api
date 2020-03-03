@@ -25,18 +25,18 @@ public class Controller {
 	private EntryService entryService;
 	
 	@GetMapping(value = "/entry")
-    public List<EntryDto> get() {
+    public List<EntryDto> getAll() {
 		return entryService.getAll();
     }
 	
-	@PostMapping(value = "/upload")
+	@PostMapping(value = "/upload", consumes = "")
 	@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> uploadSimple(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Object> uploadCsv(@RequestParam("file") MultipartFile file) {
 		try {
 			entryService.save(file.getInputStream());
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (IOException e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
     }
 }
