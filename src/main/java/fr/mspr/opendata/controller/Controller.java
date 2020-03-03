@@ -29,7 +29,7 @@ public class Controller {
 		return entryService.getAll();
     }
 	
-	@PostMapping(value = "/upload", consumes = "")
+	@PostMapping(value = "/upload")
 	@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> uploadCsv(@RequestParam("file") MultipartFile file) {
 		try {
