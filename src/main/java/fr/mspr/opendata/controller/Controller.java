@@ -41,7 +41,7 @@ public class Controller {
 		}
     }
 	
-	@PostMapping(value = "/upload", consumes = "text/csv")
+	@PostMapping(value = "/upload", consumes = "text/csv;charset=UTF-8")
 	@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> uploadCsv(@RequestBody InputStream body) {
 		System.out.println("consume text/csv");
