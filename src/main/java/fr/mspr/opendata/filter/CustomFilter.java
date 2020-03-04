@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -20,39 +21,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CustomFilter extends GenericFilterBean {
 
-	private static final List<String> WHITELIST = Arrays.asList("/swagger-resources", "/swagger-ui.html", "/v2/api-docs", "/webjars",
-			"/swagger-ui.html", "/error" );
+	@Value( "${auth.token}" )
+	private String token;
 
+	private static final List<String> BLACKLIST = Arrays.asList("/upload");
+	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		HttpServletRequest httpRequest = asHttp(request);
-		HttpServletResponse httpResponse = asHttp(response);
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		
 		String pathWithinApplication = new UrlPathHelper().getPathWithinApplication(httpRequest);
-
-		if(WHITELIST.stream().filter(path -> pathWithinApplication.contains(path)).count() > 0) {
-			chain.doFilter(request, response);
-			return;
-		}
 		
-		String authorization = httpRequest.getHeader("Authorization");
-		if(authorization != null && authorization.contains("mangerDesChats")) {
+		if(BLACKLIST.stream().filter(path -> pathWithinApplication.startsWith(path)).count() == 0) {
 			chain.doFilter(request, response);
 		} else {
-			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			Map<String, String> reponse = new HashMap<>();
-			reponse.put("error", "Invalid bearer token, fuck you Clement !");
-			httpResponse.getWriter().print(new ObjectMapper().writeValueAsString(reponse));
+			String authorization = httpRequest.getHeader("Authorization");
+			System.out.println(authorization);
+			if(authorization != null && authorization.contains(token)) {
+				chain.doFilter(request, response);
+			} else {
+				httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				Map<String, String> reponse = new HashMap<>();
+				reponse.put("error", "Invalid token. Bad token, you're not nice, i hate you !");
+				httpResponse.getWriter().print(new ObjectMapper().writeValueAsString(reponse));
+			}
 		}
-	}
-
-	private HttpServletRequest asHttp(ServletRequest request) {
-		return (HttpServletRequest) request;
-	}
-
-	private HttpServletResponse asHttp(ServletResponse response) {
-		return (HttpServletResponse) response;
 	}
 }

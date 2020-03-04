@@ -16,21 +16,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fr.mspr.opendata.entity.dto.EntryDto;
 import fr.mspr.opendata.service.EntryService;
+import io.swagger.annotations.Api;
 
 @RestController
+@Api(value = "Data management")
 public class Controller {
 
 	@Autowired
 	private EntryService entryService;
-	
+
 	@GetMapping(value = "/entry")
-    public List<EntryDto> getAll() {
+	public List<EntryDto> getAll() {
 		return entryService.getAll();
-    }
-	
+	}
+
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> uploadCsv(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<Object> uploadCsv(@RequestParam("file") MultipartFile file) {
 		try {
 			entryService.save(file.getInputStream());
 			return new ResponseEntity<>(HttpStatus.CREATED);
