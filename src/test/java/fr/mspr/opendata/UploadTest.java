@@ -2,9 +2,14 @@ package fr.mspr.opendata;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
+
+import javax.annotation.PostConstruct;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
@@ -18,19 +23,30 @@ import org.springframework.util.LinkedMultiValueMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OpendataApiApplicationTests {
+public class UploadTest {
 
+	@Value( "${auth.token}" )
+	private String token;
+	
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@PostConstruct
+	public void construct() {
+		restTemplate.getRestTemplate().setInterceptors(Collections.singletonList((request, body, execution) -> {
+			request.getHeaders().add("Authorization", token);
+			return execution.execute(request, body);
+		}));
+	}
+	
 	@Test
-	public void badRequestTest() {
+	public void unsupportedMediaTypeTest() {
 		ResponseEntity<Object> response = this.restTemplate.postForEntity("/upload", null, null);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 	}
 
 	@Test
-	public void uploadCsv() {
+	public void uploadCsvTest() {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		map.add("file", new ClassPathResource("test.csv"));
 		HttpHeaders headers = new HttpHeaders();

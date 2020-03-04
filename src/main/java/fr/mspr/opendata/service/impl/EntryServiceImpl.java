@@ -18,17 +18,25 @@ import fr.mspr.opendata.service.EntryService;
 @Service
 public class EntryServiceImpl implements EntryService {
 
-    @Autowired
-    private EntryDao entryDao;
+	@Autowired
+	private EntryDao entryDao;
 
 	public void save(InputStream file) throws IOException {
 		CSVParser records = CSVFormat.DEFAULT.withHeader().parse(new InputStreamReader(file));
 		records.forEach(item -> {
-			if(item.size() == 3) {
-				entryDao.save(new EntryDto(item.get(0), item.get(1), item.get(2)));
+			if (item.size() == 1) {
+				String[] data = getdata(item.get(0));
+				if (data.length == 3) {
+					entryDao.save(new EntryDto(data[0], data[1], data[2]));
+				}
 			}
 		});
-    }
+	}
+
+	private String[] getdata(String data) {
+		String[] split = data.split(";");
+		return split.length == 0 ? data.split(",") : split;
+	}
 
 	@Override
 	public List<EntryDto> getAll() {
