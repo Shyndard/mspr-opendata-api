@@ -8,7 +8,7 @@ import fr.mspr.opendata.entity.dto.EntryDto;
 
 public interface EntryService {
 
-    public void save(InputStream body) throws IOException;
+    public void save(InputStream body, String contentType) throws IOException;
 
 	public List<EntryDto> getAll();
     

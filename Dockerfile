@@ -9,7 +9,7 @@ FROM openjdk:8-jdk-alpine
 WORKDIR /app/
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
-COPY --from=build /compile/target/opendata-api-1.1.1.jar .
+COPY --from=build /compile/target/opendata-api-1.2.0.jar .
 
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app/opendata-api-1.1.1.jar"]
+ENTRYPOINT ["java","-jar","/app/opendata-api-1.2.0.jar"]
