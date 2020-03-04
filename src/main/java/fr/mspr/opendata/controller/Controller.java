@@ -32,9 +32,9 @@ public class Controller {
 
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Object> uploadCsv(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<Object> upload(@RequestParam("file") MultipartFile file) {
 		try {
-			entryService.save(file.getInputStream());
+			entryService.save(file.getInputStream(), file.getContentType());
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (IOException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
