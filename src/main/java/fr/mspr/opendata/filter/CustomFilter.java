@@ -38,7 +38,6 @@ public class CustomFilter extends GenericFilterBean {
 			chain.doFilter(request, response);
 		} else {
 			String authorization = httpRequest.getHeader("Authorization");
-			System.out.println(authorization);
 			if(authorization != null && authorization.contains(token)) {
 				chain.doFilter(request, response);
 			} else {
