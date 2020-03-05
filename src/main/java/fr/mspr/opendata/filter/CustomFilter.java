@@ -24,7 +24,7 @@ public class CustomFilter extends GenericFilterBean {
 	@Value( "${auth.token}" )
 	private String token;
 
-	private static final List<String> BLACKLIST = Arrays.asList("/upload");
+	private static final List<String> BLACKLIST = Arrays.asList("/upload", "/backup");
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

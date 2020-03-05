@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import fr.mspr.opendata.entity.dto.EntryDto;
+import fr.mspr.opendata.service.BackupService;
 import fr.mspr.opendata.service.EntryService;
 import io.swagger.annotations.Api;
 
@@ -24,10 +25,23 @@ public class Controller {
 
 	@Autowired
 	private EntryService entryService;
+	@Autowired
+	private BackupService backupService;
 
 	@GetMapping(value = "/entry")
 	public List<EntryDto> getAll() {
 		return entryService.getAll();
+	}
+	
+	@GetMapping(value = "/backup")
+	public ResponseEntity<Object> backup() {
+		try {
+			backupService.startBackup();
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
